@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DTOcoursesResponseToController extends DTOResponseToController {
+public class DTOcoursesResponseToController extends DTOresponseToController {
     private final List<Course> courses;
 
     public DTOcoursesResponseToController(boolean isSucceed, String details, HttpStatus httpStatus, List<Course> courses) {
