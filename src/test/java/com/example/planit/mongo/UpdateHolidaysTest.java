@@ -7,7 +7,7 @@ import com.example.planit.model.mongo.holiday.HolidayRepository;
 import com.example.planit.model.mongo.user.User;
 import com.example.planit.model.mongo.user.UserRepository;
 import com.example.planit.utill.Constants;
-import com.example.planit.utill.dto.DTOResponseToController;
+import com.example.planit.utill.dto.DTOresponseToController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -61,7 +61,7 @@ public class UpdateHolidaysTest {
         // Mock the behavior of holidayRepo.findAll() to return the mocked holidays
         when(holidayRepo.findAll()).thenReturn(holidays);
 
-        DTOResponseToController response = adminEngine.updateHolidays(sub);
+        DTOresponseToController response = adminEngine.updateHolidays(sub);
 
         verify(userRepo, times(1)).findUserBySubjectID(sub);
         assertFalse(response.isSucceed());
@@ -77,7 +77,7 @@ public class UpdateHolidaysTest {
         when(userRepo.findUserBySubjectID(sub)).thenReturn(Optional.of(user));
         when(holidayRepo.findAll()).thenReturn(holidays);
 
-        DTOResponseToController response = adminEngine.updateHolidays(sub);
+        DTOresponseToController response = adminEngine.updateHolidays(sub);
 
         verify(userRepo, times(1)).findUserBySubjectID(sub);
         assertFalse(response.isSucceed());
@@ -95,7 +95,7 @@ public class UpdateHolidaysTest {
         when(holidaysEngine.getDatesOfHolidays(holidaysApiKey, Constants.ISRAEL_HOLIDAYS_CODE, 2023))
                 .thenThrow((new RuntimeException("calendrific Error")));
 
-        DTOResponseToController response = adminEngine.updateHolidays(sub);
+        DTOresponseToController response = adminEngine.updateHolidays(sub);
 
         assertFalse(response.isSucceed());
         assertEquals(Constants.ERROR_DEFAULT, response.getDetails());
@@ -118,7 +118,7 @@ public class UpdateHolidaysTest {
         when(holidaysEngine.getDatesOfHolidays(holidaysApiKey, Constants.ISRAEL_HOLIDAYS_CODE, 2024))
                 .thenReturn(Collections.singleton(new Holiday("Holiday 1", "2023-01-01")));
 
-        DTOResponseToController response = adminEngine.updateHolidays(sub);
+        DTOresponseToController response = adminEngine.updateHolidays(sub);
 
         assertTrue(response.isSucceed());
         assertEquals(Constants.NO_PROBLEM, response.getDetails());

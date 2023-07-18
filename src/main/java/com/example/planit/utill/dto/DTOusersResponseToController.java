@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DTOusersResponseToController extends DTOResponseToController {
+public class DTOusersResponseToController extends DTOresponseToController {
     private final List<UserClientRepresentation> users;
 
     public DTOusersResponseToController(boolean isSucceed, String details, HttpStatus httpStatus, List<UserClientRepresentation> users) {

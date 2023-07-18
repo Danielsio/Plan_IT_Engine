@@ -9,7 +9,7 @@ import com.example.planit.model.mongo.user.User;
 import com.example.planit.model.mongo.user.UserClientRepresentation;
 import com.example.planit.model.mongo.user.UserRepository;
 import com.example.planit.utill.Constants;
-import com.example.planit.utill.dto.DTOResponseToController;
+import com.example.planit.utill.dto.DTOresponseToController;
 import com.example.planit.utill.dto.DTOcoursesResponseToController;
 import com.example.planit.utill.dto.DTOusersResponseToController;
 import org.apache.logging.log4j.LogManager;
@@ -246,7 +246,7 @@ public class AdminEngine {
 
     }
 
-    public DTOResponseToController updateHolidays(String sub) {
+    public DTOresponseToController updateHolidays(String sub) {
 
         List<Holiday> oldHolidays = holidayRepo.findAll();
 
@@ -254,12 +254,12 @@ public class AdminEngine {
             Optional<User> maybeUser = userRepo.findUserBySubjectID(sub);
 
             if (maybeUser.isEmpty()) {
-                return new DTOResponseToController(false, Constants.ERROR_USER_NOT_FOUND, HttpStatus.BAD_REQUEST);
+                return new DTOresponseToController(false, Constants.ERROR_USER_NOT_FOUND, HttpStatus.BAD_REQUEST);
             }
             User maybeAdminUser = maybeUser.get();
 
             if (!maybeAdminUser.isAdmin()) {
-                return new DTOResponseToController(false, Constants.ERROR_UNAUTHORIZED_USER, HttpStatus.UNAUTHORIZED);
+                return new DTOresponseToController(false, Constants.ERROR_UNAUTHORIZED_USER, HttpStatus.UNAUTHORIZED);
             }
 
             Set<Holiday> holidays;
@@ -276,18 +276,18 @@ public class AdminEngine {
 
             this.holidays.setHolidays(holidayRepo.findAll());
 
-            return new DTOResponseToController(true, Constants.NO_PROBLEM, HttpStatus.OK);
+            return new DTOresponseToController(true, Constants.NO_PROBLEM, HttpStatus.OK);
 
         } catch (IOException e) {
             // e.g. when there was problem with the url parsing or the response parsing in getDatesOfHolidays
             logger.error(buildExceptionMessage(e));
             holidayRepo.saveAll(oldHolidays);
-            return new DTOResponseToController(false, Constants.ERROR_CALENDRIFIC_EXCEPTION, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new DTOresponseToController(false, Constants.ERROR_CALENDRIFIC_EXCEPTION, HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
             // e.g. an unknown error had happened
             holidayRepo.saveAll(oldHolidays);
             logger.error(buildExceptionMessage(e));
-            return new DTOResponseToController(false, ERROR_DEFAULT, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new DTOresponseToController(false, ERROR_DEFAULT, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

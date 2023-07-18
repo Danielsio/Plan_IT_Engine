@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DTOscanResponseToController extends DTOResponseToController {
+public class DTOscanResponseToController extends DTOresponseToController {
     private final List<Event> fullDayEvents;
 
     private final StudyPlan studyPlan;
